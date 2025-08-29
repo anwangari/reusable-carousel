@@ -1,5 +1,5 @@
 // Image slider data
-const imageSliderData = [
+export const imageSliderData = [
     {
         type: 'image',
         src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop',
@@ -23,61 +23,71 @@ const imageSliderData = [
 ];
 
 // Testimonials data
-const testimonialsData = [
+export const testimonialsData = [
     {
         type: 'card',
         template: 'testimonial',
         content: {
-            quote: "This product completely transformed our workflow. Amazing results!",
-            author: "Sarah Johnson",
-            role: "CEO, TechStart",
-            avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b5e5?w=100&h=100&fit=crop&crop=face"
+            name: "Sarah Johnson",
+            title: "CEO",
+            company: "TechStart Inc.",
+            photo: "https://images.unsplash.com/photo-1494790108755-2616b612b5e5?w=100&h=100&fit=crop&crop=face",
+            rating: 5,
+            testimonial: "This product completely transformed our workflow. The results have been amazing and exceeded all our expectations."
         }
     },
     {
         type: 'card',
         template: 'testimonial',
         content: {
-            quote: "Outstanding customer service and incredible quality. Highly recommended!",
-            author: "Mike Chen",
-            role: "Designer, CreativeStudio",
-            avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+            name: "Mike Chen",
+            title: "Lead Designer", 
+            company: "CreativeStudio",
+            photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+            rating: 5,
+            testimonial: "Outstanding customer service and incredible quality. The attention to detail is remarkable. Highly recommended for any business!"
         }
     },
     {
         type: 'card',
         template: 'testimonial',
         content: {
-            quote: "The best investment we've made for our business. Game changer!",
-            author: "Emily Rodriguez",
-            role: "Marketing Director",
-            avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
+            name: "Emily Rodriguez",
+            title: "Marketing Director",
+            company: "Growth Co.",
+            photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
+            rating: 5,
+            testimonial: "The best investment we've made for our business. It's been a complete game changer for our team's productivity."
         }
     },
     {
         type: 'card',
         template: 'testimonial',
         content: {
-            quote: "Exceeded all expectations. The team is professional and results speak for themselves.",
-            author: "David Kim",
-            role: "Founder, InnovateLab",
-            avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+            name: "David Kim",
+            title: "Founder",
+            company: "InnovateLab",
+            photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
+            rating: 4,
+            testimonial: "Exceeded all expectations. The team is professional and the results speak for themselves. Great value for money."
         }
     },
     {
         type: 'card',
         template: 'testimonial',
         content: {
-            quote: "Incredible attention to detail and fantastic user experience.",
-            author: "Lisa Thompson",
-            role: "Product Manager",
-            avatar: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=100&h=100&fit=crop&crop=face"
+            name: "Lisa Thompson",
+            title: "Product Manager",
+            company: "Digital Solutions",
+            photo: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=100&h=100&fit=crop&crop=face",
+            rating: 5,
+            testimonial: "Incredible attention to detail and fantastic user experience. Our customers love the improvements we've made."
         }
     }
 ];
 
 // Product showcase data
-const productShowcaseData = [
+export const productShowcaseData = [
     {
         type: 'card',
         template: 'product',

@@ -53,7 +53,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     width: 120px;
-    height: 300px;
+    height: 360px;
     background: white;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
@@ -70,11 +70,11 @@ body {
 }
 
 .carousel-preview.prev {
-    left: -100px;
+    left: -60px;
 }
 
 .carousel-preview.next {
-    right: -100px;
+    right: -60px;
 }
 
 .carousel-preview img,
@@ -84,53 +84,300 @@ body {
     object-fit: cover;
 }
 
-/* Testimonial card styling */
+/* Simple testimonial card styling */
 .testimonial-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 30px;
-    text-align: center;
-    position: relative;
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.quote-icon {
-    font-size: 60px;
-    opacity: 0.3;
-    line-height: 1;
-    margin-bottom: 20px;
-}
-
-.testimonial-quote {
-    font-size: 18px;
-    font-style: italic;
-    margin-bottom: 30px;
-    line-height: 1.6;
-}
-
-.testimonial-author {
+.testimonial-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 15px;
+    margin-bottom: 16px;
 }
 
-.author-avatar {
-    width: 60px;
-    height: 60px;
+.client-photo {
+    margin-right: 12px;
+}
+
+.client-photo img {
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid rgba(255,255,255,0.3);
 }
 
-.author-info h4 {
-    margin: 0 0 5px 0;
+.client-info h3 {
+    margin: 0 0 4px 0;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
+    color: #111827;
 }
 
-.author-info span {
+.client-title {
+    margin: 0 0 2px 0;
     font-size: 14px;
-    opacity: 0.8;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.client-company {
+    margin: 0;
+    font-size: 14px;
+    color: #9ca3af;
+}
+
+.testimonial-rating {
+    margin-bottom: 16px;
+}
+
+.stars {
+    color: #fbbf24;
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.testimonial-text {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #374151;
+    font-style: italic;
+    flex: 1;
+    border: none;
+}
+
+/* Mobile responsive for testimonials */
+@media (max-width: 768px) {
+    .testimonial-card {
+        padding: 20px;
+    }
+
+    .testimonial-header {
+        margin-bottom: 14px;
+    }
+
+    .client-photo img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .client-info h3 {
+        font-size: 15px;
+    }
+
+    .client-title,
+    .client-company {
+        font-size: 13px;
+    }
+
+    .stars {
+        font-size: 14px;
+    }
+
+    .testimonial-text {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonial-card {
+        padding: 16px;
+    }
+
+    .testimonial-header {
+        margin-bottom: 12px;
+    }
+
+    .client-photo img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .client-info h3 {
+        font-size: 14px;
+    }
+
+    .client-title,
+    .client-company {
+        font-size: 12px;
+    }
+
+    .testimonial-text {
+        font-size: 12px;
+    }
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+
+    .carousel-container {
+        margin: 0 20px;
+        max-width: calc(100vw - 40px);
+    }
+
+    .carousel-wrapper {
+        height: 300px;
+    }
+
+    /* Hide previews on mobile */
+    .carousel-preview {
+        display: none;
+    }
+
+    /* Adjust button positioning */
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .carousel-btn.prev {
+        left: 10px;
+    }
+
+    .carousel-btn.next {
+        right: 10px;
+    }
+
+    /* Testimonial mobile adjustments */
+    .testimonial-card {
+        padding: 25px 20px;
+    }
+
+    .testimonial-quote {
+        font-size: 16px;
+        max-width: 95%;
+    }
+
+    .quote-icon {
+        font-size: 36px;
+        margin-bottom: 15px;
+    }
+
+    .quote-icon.close-quote {
+        margin-top: 15px;
+    }
+
+    .testimonial-author {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .author-info {
+        text-align: center;
+    }
+
+    .author-avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .author-info h4 {
+        font-size: 14px;
+    }
+
+    .author-info span {
+        font-size: 12px;
+    }
+
+    /* Product card mobile adjustments */
+    .product-info {
+        padding: 15px;
+    }
+
+    .product-info h3 {
+        font-size: 18px;
+    }
+
+    .product-info p {
+        font-size: 13px;
+    }
+
+    .product-price {
+        font-size: 20px;
+    }
+
+    /* Dots responsive */
+    .carousel-dots {
+        padding: 15px;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-container {
+        margin: 0 10px;
+        max-width: calc(100vw - 20px);
+    }
+
+    .carousel-wrapper {
+        height: 250px;
+    }
+
+    .testimonial-card {
+        padding: 20px 15px;
+    }
+
+    .testimonial-quote {
+        font-size: 14px;
+    }
+
+    .quote-icon {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .quote-icon.close-quote {
+        margin-top: 10px;
+    }
+
+    .product-info h3 {
+        font-size: 16px;
+    }
+
+    .product-price {
+        font-size: 18px;
+    }
+}
+
+/* Tablet responsive adjustments */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .carousel-preview {
+        width: 100px;
+        height: 320px;
+    }
+
+    .carousel-preview.prev {
+        left: -50px;
+    }
+
+    .carousel-preview.next {
+        right: -50px;
+    }
+
+    .testimonial-quote {
+        font-size: 17px;
+    }
+
+    .quote-icon {
+        font-size: 42px;
+    }
 }
 
 /* Product card styling */
@@ -179,26 +426,38 @@ body {
 
 /* Responsive preview adjustments */
 .carousel-preview .testimonial-card {
-    padding: 10px;
-    font-size: 10px;
-}
-
-.carousel-preview .testimonial-quote {
+    padding: 8px;
     font-size: 8px;
-    margin-bottom: 10px;
 }
 
-.carousel-preview .author-avatar {
+.carousel-preview .testimonial-header {
+    margin-bottom: 8px;
+}
+
+.carousel-preview .client-photo img {
     width: 20px;
     height: 20px;
 }
 
-.carousel-preview .author-info h4 {
+.carousel-preview .client-info h3 {
     font-size: 8px;
+    margin-bottom: 2px;
 }
 
-.carousel-preview .author-info span {
-    font-size: 7px;
+.carousel-preview .client-title,
+.carousel-preview .client-company {
+    font-size: 6px;
+    margin-bottom: 1px;
+}
+
+.carousel-preview .stars {
+    font-size: 8px;
+    letter-spacing: 1px;
+}
+
+.carousel-preview .testimonial-text {
+    font-size: 6px;
+    line-height: 1.4;
 }
 
 .carousel-preview .product-info {

@@ -1,3 +1,6 @@
+import { createElement, clearElement, appendChildren } from './dom-helpers.js';
+import { imageSliderData, testimonialsData, productShowcaseData } from './carousel-data.js';
+
 class ReusableCarousel {
     constructor(containerId, data, options = {}) {
         this.container = document.getElementById(containerId);
@@ -28,22 +31,63 @@ class ReusableCarousel {
     }
 
     renderCarousel() {
-        // Generate HTML structure
-        this.container.innerHTML = `
-            <div class="carousel-main">
-                <div class="carousel-wrapper">
-                    <div class="carousel-track" id="${this.container.id}-track">
-                        ${this.renderSlides()}
-                    </div>
-                    ${this.options.showArrows ? this.renderArrows() : ''}
-                </div>
-                ${this.options.showDots ? '<div class="carousel-dots" id="' + this.container.id + '-dots"></div>' : ''}
-            </div>
-            ${this.options.showPreviews ? this.renderPreviews() : ''}
-        `;
+        clearElement(this.container);
+        
+        // Main carousel structure
+        const carouselMain = createElement('div', { className: 'carousel-main' });
+        const carouselWrapper = createElement('div', { className: 'carousel-wrapper' });
+        const carouselTrack = createElement('div', { 
+            className: 'carousel-track', 
+            id: `${this.container.id}-track` 
+        });
+
+        // Render slides
+        this.renderSlides(carouselTrack);
+
+        // Add arrows if enabled
+        if (this.options.showArrows) {
+            const prevBtn = createElement('button', {
+                className: 'carousel-btn prev',
+                'data-action': 'prev',
+                innerHTML: '‹'
+            });
+            const nextBtn = createElement('button', {
+                className: 'carousel-btn next',
+                'data-action': 'next',
+                innerHTML: '›'
+            });
+            appendChildren(carouselWrapper, [prevBtn, nextBtn]);
+        }
+
+        carouselWrapper.appendChild(carouselTrack);
+
+        // Add dots if enabled
+        if (this.options.showDots) {
+            const dotsContainer = createElement('div', {
+                className: 'carousel-dots',
+                id: `${this.container.id}-dots`
+            });
+            carouselMain.appendChild(dotsContainer);
+        }
+
+        carouselMain.appendChild(carouselWrapper);
+        this.container.appendChild(carouselMain);
+
+        // Add preview slides if enabled
+        if (this.options.showPreviews) {
+            const prevPreview = createElement('div', {
+                className: 'carousel-preview prev',
+                'data-action': 'prev'
+            });
+            const nextPreview = createElement('div', {
+                className: 'carousel-preview next',
+                'data-action': 'next'
+            });
+            appendChildren(this.container, [prevPreview, nextPreview]);
+        }
 
         // Cache DOM elements
-        this.track = this.container.querySelector('.carousel-track');
+        this.track = carouselTrack;
         this.slides = this.track.children;
         this.prevPreview = this.container.querySelector('.carousel-preview.prev');
         this.nextPreview = this.container.querySelector('.carousel-preview.next');
@@ -53,91 +97,155 @@ class ReusableCarousel {
         }
     }
 
-    renderSlides() {
-        return this.data.map(item => `
-            <div class="carousel-slide">
-                ${this.renderSlideContent(item)}
-            </div>
-        `).join('');
+    renderSlides(trackElement) {
+        this.data.forEach(item => {
+            const slide = createElement('div', { className: 'carousel-slide' });
+            const content = this.createSlideContent(item);
+            slide.appendChild(content);
+            trackElement.appendChild(slide);
+        });
     }
 
-    renderSlideContent(item) {
+    createSlideContent(item) {
         if (item.type === 'image') {
-            return `<img src="${item.src}" alt="${item.alt || ''}" />`;
+            return createElement('img', {
+                src: item.src,
+                alt: item.alt || ''
+            });
         } else if (item.type === 'card') {
-            return this.renderCardTemplate(item);
+            return this.createCardElement(item);
         }
-        return '';
+        return createElement('div');
     }
 
-    renderCardTemplate(item) {
+    createCardElement(item) {
+        const card = createElement('div', { className: 'card' });
+
         switch (item.template) {
             case 'testimonial':
-                return `
-                    <div class="card testimonial-card">
-                        <div class="testimonial-content">
-                            <div class="quote-icon">"</div>
-                            <p class="testimonial-quote">${item.content.quote}</p>
-                            <div class="testimonial-author">
-                                <img src="${item.content.avatar}" alt="${item.content.author}" class="author-avatar">
-                                <div class="author-info">
-                                    <h4>${item.content.author}</h4>
-                                    <span>${item.content.role}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                return this.createTestimonialCard(item.content);
             case 'product':
-                return `
-                    <div class="card product-card">
-                        <img src="${item.content.image}" alt="${item.content.title}" class="product-image">
-                        <div class="product-info">
-                            <h3>${item.content.title}</h3>
-                            <p>${item.content.description}</p>
-                            <div class="product-price">${item.content.price}</div>
-                        </div>
-                    </div>
-                `;
+                return this.createProductCard(item.content);
             default:
-                return `
-                    <div class="card">
-                        ${item.content.title ? `<h2>${item.content.title}</h2>` : ''}
-                        ${item.content.description ? `<p>${item.content.description}</p>` : ''}
-                    </div>
-                `;
+                return this.createGenericCard(item.content);
         }
     }
 
-    renderArrows() {
-        return `
-            <button class="carousel-btn prev" data-action="prev">‹</button>
-            <button class="carousel-btn next" data-action="next">›</button>
-        `;
+    createTestimonialCard(content) {
+        const card = createElement('div', { className: 'testimonial-card' });
+        
+        // Header with client info
+        const header = createElement('div', { className: 'testimonial-header' });
+        const clientPhoto = createElement('div', { className: 'client-photo' });
+        const img = createElement('img', {
+            src: content.photo,
+            alt: content.name
+        });
+        clientPhoto.appendChild(img);
+        
+        const clientInfo = createElement('div', { className: 'client-info' });
+        const name = createElement('h3', { textContent: content.name });
+        const title = createElement('p', { 
+            className: 'client-title',
+            textContent: content.title 
+        });
+        const company = createElement('p', { 
+            className: 'client-company',
+            textContent: content.company 
+        });
+        
+        appendChildren(clientInfo, [name, title, company]);
+        appendChildren(header, [clientPhoto, clientInfo]);
+        
+        // Rating
+        const rating = createElement('div', { className: 'testimonial-rating' });
+        const stars = createElement('span', { 
+            className: 'stars',
+            textContent: this.createStarRating(content.rating)
+        });
+        rating.appendChild(stars);
+        
+        // Testimonial text
+        const testimonialText = createElement('blockquote', {
+            className: 'testimonial-text',
+            textContent: content.testimonial
+        });
+        
+        appendChildren(card, [header, rating, testimonialText]);
+        return card;
     }
 
-    renderPreviews() {
-        return `
-            <div class="carousel-preview prev" data-action="prev"></div>
-            <div class="carousel-preview next" data-action="next"></div>
-        `;
+    createStarRating(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 !== 0;
+        let stars = '';
+        
+        // Add full stars
+        for (let i = 0; i < fullStars; i++) {
+            stars += '★';
+        }
+        
+        // Add half star if needed
+        if (hasHalfStar) {
+            stars += '☆';
+        }
+        
+        // Add empty stars to make 5 total
+        const emptyStars = 5 - Math.ceil(rating);
+        for (let i = 0; i < emptyStars; i++) {
+            stars += '☆';
+        }
+        
+        return stars;
+    }
+
+    createProductCard(content) {
+        const card = createElement('div', { className: 'card product-card' });
+        const image = createElement('img', {
+            className: 'product-image',
+            src: content.image,
+            alt: content.title
+        });
+        const productInfo = createElement('div', { className: 'product-info' });
+        const title = createElement('h3', { textContent: content.title });
+        const description = createElement('p', { textContent: content.description });
+        const price = createElement('div', {
+            className: 'product-price',
+            textContent: content.price
+        });
+
+        appendChildren(productInfo, [title, description, price]);
+        appendChildren(card, [image, productInfo]);
+        return card;
+    }
+
+    createGenericCard(content) {
+        const card = createElement('div', { className: 'card' });
+        if (content.title) {
+            const title = createElement('h2', { textContent: content.title });
+            card.appendChild(title);
+        }
+        if (content.description) {
+            const description = createElement('p', { textContent: content.description });
+            card.appendChild(description);
+        }
+        return card;
     }
 
     createDots() {
         const dotsContainer = this.container.querySelector('.carousel-dots');
         if (!dotsContainer) return;
 
-        dotsContainer.innerHTML = '';
+        clearElement(dotsContainer);
         for (let i = 0; i < this.data.length; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'dot';
+            const dot = createElement('div', { className: 'dot' });
             dot.addEventListener('click', () => this.goToSlide(i));
             dotsContainer.appendChild(dot);
         }
     }
 
     bindEvents() {
-        // Arrow buttons
+        // Arrow buttons and preview clicks
         this.container.addEventListener('click', (e) => {
             const action = e.target.getAttribute('data-action');
             if (action === 'prev') this.prevSlide();
@@ -184,8 +292,14 @@ class ReusableCarousel {
         const nextIndex = (this.currentIndex + 1) % totalSlides;
 
         // Update preview content
-        this.prevPreview.innerHTML = this.renderSlideContent(this.data[prevIndex]);
-        this.nextPreview.innerHTML = this.renderSlideContent(this.data[nextIndex]);
+        clearElement(this.prevPreview);
+        clearElement(this.nextPreview);
+        
+        const prevContent = this.createSlideContent(this.data[prevIndex]);
+        const nextContent = this.createSlideContent(this.data[nextIndex]);
+        
+        this.prevPreview.appendChild(prevContent);
+        this.nextPreview.appendChild(nextContent);
     }
 
     goToSlide(index) {
@@ -231,7 +345,7 @@ class ReusableCarousel {
     // Public methods for external control
     destroy() {
         this.stopAutoPlay();
-        this.container.innerHTML = '';
+        clearElement(this.container);
     }
 
     updateData(newData) {
